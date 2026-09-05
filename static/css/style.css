@@ -257,7 +257,7 @@ h1, .brand {
     color: var(--text-muted); 
 }
 
-.features-card > p{
+.category{
     color: var(--ink);
     font-size: 1.5rem;
 }
