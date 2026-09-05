@@ -1,3 +1,7 @@
+html, body {
+    scroll-behavior: smooth !important;
+}
+  
 * {
     margin: 0;
     padding: 0;
@@ -191,5 +195,26 @@ h1, .brand {
     .social-links {
         justify-content: flex-start;
     }
+
 }
 
+.education-card {
+    display: flex;
+    align-items: center; 
+    gap: 1rem;          
+}
+
+.education-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain; 
+    flex-shrink: 0;      
+}
+
+.education-info h3 {
+    margin: 0;
+}
+
+.education-info p {
+    margin: 0.25rem 0 0;
+}
