@@ -54,31 +54,90 @@
             </div>
         </section>
 
-        <div class="container">
 
+        <!-- 
+            <div class="container" is a generic wrapping box that has no 
+            semantic meaning. It is purely used as a styling hook for CSS.
+        -->
+        <div class="container">
+            
+            <!-- 
+                <section> = Used to group related content that shares a common topic.
+                In this case, it is the education section.
+                'class=...' lets CSS/JS target it. 
+                'id=...' is used to link directly to this part of the page. The navbar links use this: <a href="#education">
+            -->
             <section class="section education-section" id="education">
-                
+
+                <!--
+                    <h2> = a heading, second level in importance. (<h1> is the page's main title that is used once.)
+                    <h2> is for major section titles.)
+                -->
                 <h2 class="section-title">Education</h2>
+
+                <!--
+                    A div acting as a grid container, in CSS you put it to display:flex/grid so 
+                    that the cards inside arrange themselves in columns/rows.
+                -->
                 <div class="features-grid">
 
+                    <!--
+                        <article> =  A self contained piece of content that is independent.
+                        Ex: in this case education entries.
+
+                    -->
                     <article class="features-card">
+                        
+                        <!--
+                            <p> = paragraph. In this case its being used for as a label. 
+                        -->
                         <p class="category">Higher Education</p>
+
+                        <!--
+                            Wrapper div grouping the logo + title + subtitle so that CSS can lay them side by side.
+                        -->
                         <div class="features-info">
-                        <img src="/static/img/UI-Logo.png" alt="University of Indonesia" class="features-image">
+
+                        <!--
+                            <img> = image element.
+                            src = directory of the image file.
+                            alt = text shown if image fails to load.
+                            class = lets CSS control its size and shape
+                            <img> is a void element (no nested element and no text content) 
+                            so it doesn't need a closing tag.
+                        -->
+                            <img src="/static/img/UI-Logo.png" alt="University of Indonesia" class="features-image">
+
+                            <!--
+                                <h3> = a heading, a level below <h2>. Used for the card's title, since its inside
+                                the education section (h2) it forms a logical hierarchy: h1 > h2 > h3.
+                            -->
                             <h3>University of Indonesia</h3>
+
+                            <!--
+                                A paragraph, used for subtitle text.
+                            -->
                             <p>Undergraduate Computer Science</p>
                             
                         </div>
+
+                        <!--
+                            <ul> = unordered list (bullet points).
+                            <li> = each individual list item.   
+                        -->
                         <ul class="features-list">
                             <li>Event Staff of DDP0 2026</li>
                             <li>SBF Fasilkom 2026</li>
                         </ul>
                     </article>
                     
+                    <!--
+                        Same patterns repeat here.
+                    -->
                     <article class="features-card">
                         <p class="category">High School</p>
                         <div class="features-info">
-                        <img src="/static/img/Gonzaga-Logo.png" alt="SMA Kolese Gonzaga" class="features-image">
+                            <img src="/static/img/Gonzaga-Logo.png" alt="SMA Kolese Gonzaga" class="features-image">
                             <h3>SMA Kolese Gonzaga</h3>
                             <p>Catholic School</p>
                         </div>
@@ -87,6 +146,9 @@
                         </ul>
                     </article>
 
+                    <!--
+                        Repeats here too.
+                    -->
                     <article class="features-card">
                         <p class="category">Middle School</p>
                         <div class="features-info">
@@ -94,6 +156,10 @@
                             <h3>SMP Santa Theresia</h3>
                             <p>Catholic School</p>
                         </div>
+
+                        <!-- 
+                            There is an empty <ul> here so that all 3 hards have the same html structure.
+                        -->
                         <ul class="features-list"></ul>
                     </article>
 
@@ -101,6 +167,11 @@
                 </div>
             </section>
 
+
+            <!--
+                A seperate section for a different topic.
+                "align right" is a custom class for CSS used to mirror the layout.
+            -->
             <section class="section hobbies-section align-right" id="hobbies">
                 
                 <h2 class="section-title">Hobbies</h2>
@@ -112,6 +183,11 @@
                             <h3>FPS Games</h3>
                             <img src="/static/img/FPS-Games.jpeg" alt="FPS Games" class="features-image">
                         </div>
+                        
+                        <!--
+                            Semantically not a real list. With the <ul> tag I couldnt figure out how to make the 
+                            bullets be on the right instead of on the left.
+                        -->
                         <p>Valorant •</p>
                         <p>CSGO •</p>
                         <p>etc •</p>
