@@ -8,6 +8,7 @@ html, body {
     box-sizing: border-box;
 }
 
+/* Lets you define a value once and reuse it everywhere */
 :root {
     --ink: #112D4E;
     --paper: #DBE2EF;
@@ -20,7 +21,7 @@ html, body {
 
 body {
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--ink);
+    color: var(--ink); /* reuse the value from root like this */
     background-color: var(--paper);
     line-height: 1.6;
 }
@@ -199,22 +200,37 @@ h1, .brand {
 
 }
 
+/*
+    .features-card = each individual card (education entry, hobby entry).
+    display: flex = stacks its children (category label, info block, list) vertically into a column (flex-direction)
+    flex-direction can only be used if display:flex/inline-flex
+
+*/
 .features-card {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;          
+    display: flex;     
+    flex-direction: column; /* column stacks things vertically, row stacks things horizontally */
+    gap: 1rem;       /* Clean way to space out children of a flex/grid container. */   
 }
 
+
+/* 
+    .features-image = the image inside each card. 
+
+*/
 .features-image {
-    width: 96px;
+    width: 96px;    /* Forces every image to these width and height regardless of the image's dimensions */
     height: 96px;
-    object-fit: contain; 
+    object-fit: contain; /* When forcing images into a fixed box size, 
+                            it shrinks the image inside the box without cropping or distorting it */
     flex-shrink: 0;      
 }
 
 .features-info{
     display: flex;
-    align-items: center;
+    align-items: center; /* alignment along the cross axis. 
+                            In this case the main axis is vertical (flex-direction:column),
+                            so it controls horizontal alignment.
+                        */
     gap: 1rem;
 }
 .features-info h3 {
@@ -273,7 +289,7 @@ h1, .brand {
     margin-top: 4rem;
 }
 
-
+/* Everything below is a descendant selector. This is how you override styles based on context. */
 .align-right {
     margin-left: auto;
     margin-right: 0;
@@ -283,7 +299,7 @@ h1, .brand {
     text-align: right;
 }
 
-
+/* Means target .features-card only when its nested inside .align right*/
 .align-right .features-card {
     width: 100%;
     align-items: flex-end;
@@ -292,7 +308,7 @@ h1, .brand {
 
 .align-right .features-info {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; /* alignment along the main axis. default without flex-direction = row */
     align-items: center;
     gap: 1rem;
     width: auto;
