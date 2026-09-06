@@ -205,7 +205,7 @@ h1, .brand {
     gap: 1rem;          
 }
 
-.features-logo {
+.features-image {
     width: 96px;
     height: 96px;
     object-fit: contain; 
@@ -252,6 +252,7 @@ h1, .brand {
     line-height: 1.4;
 }
 
+.features-card > p,
 .features-info p,
 .features-list li {
     color: var(--text-muted); 
