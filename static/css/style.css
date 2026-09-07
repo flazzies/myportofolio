@@ -17,6 +17,18 @@ html, body {
     --line: #112D4E;
     --text-muted: #3F72AF;
     --radius: 4px;
+    --button-color:#99c7ff;
+}
+
+.darkmode {
+    --paper: #161e2b;
+    --ink: #e8ecf4;
+    --accent: #60a5fa;
+    --accent-dark: #5fa5fa;
+    --line: rgb(82, 114, 155);
+    --text-muted: #aed0ff;
+    --radius: 4px;
+    --button-color:#314e6e;
 }
 
 body {
@@ -264,7 +276,7 @@ h1, .brand {
 
 .features-list li {
     font-size: 0.95rem;
-    color: #333;
+
     line-height: 1.4;
 }
 
@@ -321,4 +333,33 @@ h1, .brand {
     list-style-position: inside;
     text-align: right;
     width: auto;
+}
+
+#theme-switch{
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    border-radius:50%;
+    background-color: var(--button-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+#theme-switch svg{
+    fill: var(--ink);
+}
+
+#theme-switch svg:last-child{
+    display: none;
+}
+
+.darkmode #theme-switch svg:first-child{
+    display: none;
+}
+
+.darkmode #theme-switch svg:last-child{
+    display: block;
 }
