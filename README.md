@@ -30,3 +30,5 @@ Chat lognya ada disini (Claude): https://claude.ai/share/9518a87a-b61b-4460-98e5
 
 Untuk Gemini, sepertinya kelemahannya adalah jika diberikan data yang terlalu banyak, ada ketidaktelitiannya. 
 Chat log Gemini: https://share.gemini.google/SlHQylKABmZz
+
+Untuk pembuatan fitur darkmode, saya tidak memakai AI, hanya mentonon tutorial di YouTube
