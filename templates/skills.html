@@ -31,31 +31,34 @@
     </header>
 
     <main>
-        <section class="experience-section" id="experience">
+        <section class="skill-section" id="skills">
             <div class="container">
-                <p class="section-kicker">Perjalanan saya sejauh ini</p>
-                <h1>Experience</h1>
+                <p class="section-kicker">Kemampuan teknis saya sejauh ini</p>
+                <h1>Skills</h1>
     
-                <div class="experience-grid">
-                    {% for experience in experience_list %}
-                        <article class="experience-card">
-                            <span class="experience-category">
-                                {{ experience.get_category_display }}
-                            </span>
-                            <h2>{{ experience.title }}</h2>
-                            <p class="experience-description">
-                                {{ experience.description }}
+                <div class="skill-grid">
+                    {% for skill in skill_list %}
+                        <article class="skill-card">
+                            {% if skill.thumbnail %}
+                            <div class="icon-tile">
+                                <img src="{{ skill.thumbnail }}" alt="{{ skill.name }}" style="max-width: 55px; margin-bottom: 0.2rem;">
+                            </div>
+                            {% endif %}
+                            <p class="skill-category">
+                                {{ skill.get_category_display }}
+                            </p>
+                            <h2>{{ skill.name }}</h2>
+                            <p class="skill-proficiency">
+                                Tingkat: {{ skill.get_proficiency_display }}
+                            </p>
+                            <p class="skill-description">
+                                {{ skill.description }}
                             </p>
     
-                            {% if experience.is_ongoing %}
-                                <p class="experience-status">Sedang berlangsung</p>
-                            {% else %}
-                                <p class="experience-status">Selesai</p>
-                            {% endif %}
                         </article>
                     {% empty %}
                         <p class="empty-state">
-                            Belum ada pengalaman yang ditambahkan.
+                            Belum ada keahlian yang ditambahkan.
                         </p>
                     {% endfor %}
                 </div>

@@ -19,6 +19,12 @@ html, body {
     --radius: 4px;
     --button-color:#99c7ff;
     --experience-card: #caddff;
+    --skill-card:white;
+    --card-border: rgba(0, 0, 0, 0.08);
+    --proficiency-color:#dcfce7;
+    --proficiency-text-color:#15803d;
+    --category-color: hsl(211, 100%, 96%);
+    --category-text-color: #3F72AF;
 }
 
 .darkmode {
@@ -31,6 +37,13 @@ html, body {
     --radius: 4px;
     --button-color:#314e6e;
     --experience-card: #314e6e;
+    --skill-card:rgb(14, 44, 77);
+    --card-border: #64affe;
+    --proficiency-color:#00521d;
+    --proficiency-text-color:#9affbe;
+    --category-color: hsl(213, 100%, 24%);
+    --category-text-color: rgb(180, 213, 255);
+
 }
 
 body {
@@ -366,6 +379,8 @@ h1, .brand {
     display: block;
 }
 
+
+/* --------- Experience ----------*/
 .experience-section {
     padding: 4rem 0;
     border-top: 1px solid var(--line);
@@ -418,4 +433,89 @@ h1, .brand {
     margin-top: 1rem;
     font-size: 0.85rem;
     font-weight: 600;
+}
+
+/* --------- Skills ----------*/
+
+.skill-section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--line);
+}
+
+
+
+.skill-section h1 {
+    margin: 0.4rem 0 1.5rem;
+    font-size: 2rem;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .skill-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skill-card {
+    padding: 1.25rem;
+    background-color: var(--skill-card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.08);
+    min-height:320px;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.25s ease;
+}
+
+.skill-category {
+    background-color:var(--category-color);
+    color: var(--category-text-color);
+    font-size: 0.85rem;
+    font-weight: 630;
+    padding: 0.25rem 0.75rem; 
+    border-radius: 9999px; 
+    margin: 0.5rem 0;
+    text-transform: uppercase;
+    width: fit-content;  
+}
+
+.skill-card h2 {
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.skill-description,
+.empty-state {
+    color: var(--ink);
+}
+
+.skill-proficiency {
+    background-color: var(--proficiency-color);
+    color: var(--proficiency-text-color);            
+    font-weight: 600;          
+    font-size: 0.85rem;        
+    padding: 0.25rem 0.75rem; 
+    border-radius: 9999px;     
+    width: fit-content;        
+    margin: 0.5rem 0;
+}
+
+.icon-tile{
+    width:60px;
+    height:60px;
+    background-color:#f1f5f9;
+    border-radius:10px;
+    align-items:center;
+    justify-content: center;
+    display:flex;
+    border: 2px solid var(--card-border);
+    margin-bottom: 1.2rem;
 }

@@ -24,3 +24,27 @@ class Experience(models.Model):
     @property
     def is_ongoing(self):
         return self.ended_at is None
+    
+class Skill(models.Model):
+    CATEGORY_CHOICES = [
+        ('frontend', 'Front-end Development'),
+        ('backend', 'Back-end Development'),
+        ('devops', 'DevOps'),
+        ('database', 'Database Development'),
+    ]
+    
+    PROFICIENCY_CHOICES = [
+        ('beginner', 'Beginner'),
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced'),
+    ]
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='frontend')
+    proficiency = models.CharField(max_length=20, choices=PROFICIENCY_CHOICES, default='intermediate')
+    thumbnail = models.URLField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
