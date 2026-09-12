@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from main.models import Experience
+from main.models import Experience,Skill
 
 
 class MainTest(TestCase):
@@ -12,6 +12,17 @@ class MainTest(TestCase):
             description="Membantu mahasiswa memahami pengembangan web.",
             category="part-time",
         )
+        self.skill = Skill.objects.create(
+            name="Java",
+            category="backend",
+            proficiency="intermediate",
+            description="Berpengalaman dalam pengembangan perangkat lunak berbasis OOP, abstraksi class hierarchy, dan perancangan logika backend.",
+            thumbnail="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
+        )
+    
+
+
+    
 
     def test_main_url_is_accessible(self):
         response = self.client.get(reverse("main:show_main"))
@@ -59,3 +70,23 @@ class MainTest(TestCase):
         self.assertFalse(self.experience.is_ongoing)
         self.assertContains(response, "Selesai")
         self.assertNotContains(response, "Sedang berlangsung")
+        
+
+
+        
+    def test_skill_page(self):
+        response = self.client.get(reverse("main:show_skill"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "skills.html")
+        self.assertContains(response, self.skill.name)
+        self.assertContains(response, self.skill.description)
+        self.assertContains(response, "Intermediate")
+        self.assertContains(response, "Back-end")
+        self.assertContains(response, f'href="{reverse("main:show_main")}"')
+        
+    def test_empty_skill_page(self):
+        Skill.objects.all().delete()
+        response = self.client.get(reverse("main:show_skill"))
+
+        self.assertContains(response, "Belum ada keahlian yang ditambahkan.")
