@@ -520,3 +520,41 @@ h1, .brand {
     border: 2px solid var(--card-border);
     margin-bottom: 1.2rem;
 }
+
+.filter-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px; 
+    margin-bottom: 20px;
+}
+
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px; 
+}
+
+.filter-bar span {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.filter-bar a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border: 1px solid var(--ink);
+    border-radius: 16px;
+    background-color: var(--experience-card);
+    color:var(--ink);
+}
+
+.filter-bar a:hover,
+.filter-bar a.active {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+}
