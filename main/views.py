@@ -34,7 +34,7 @@ def show_skill(request):
         skills = Skill.objects.filter(category=category_filter)
 
     if proficiency_filter:
-        skills = Skill.objects.filter(proficiency_filter=proficiency_filter)
+        skills = Skill.objects.filter(proficiency=proficiency_filter)
 
     
     context = {
