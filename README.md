@@ -35,6 +35,8 @@ Chat log Gemini: https://share.gemini.google/SlHQylKABmZz
 
 Untuk pembuatan fitur darkmode, saya tidak memakai AI, hanya mentonon tutorial di YouTube
 
+
+
 ### Tugas 2 ###
 
 1. urls.py proyek yang ada di folder portofolio menerima request awal dari browser dan mengopernya ke urls.py milik aplikasi, yang ada di folder main.

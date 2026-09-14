@@ -25,9 +25,21 @@ def show_experience(request):
     return render(request, "experience.html", context)
 
 def show_skill(request):
+    category_filter = request.GET.get('category')
+    proficiency_filter = request.GET.get('proficiency')
+    
+    skills = Skill.objects.all()
+    
+    if category_filter:
+        skills = Skill.objects.filter(category=category_filter)
+
+    if proficiency_filter:
+        skills = Skill.objects.filter(proficiency_filter=proficiency_filter)
+
+    
     context = {
         "name": "Geo",
         "fullname" : "Georgius Satria Adibrata",
-        "skill_list": Skill.objects.all(),
+        "skill_list": skills,
     }
     return render(request, "skills.html", context)

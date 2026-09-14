@@ -35,6 +35,27 @@
             <div class="container">
                 <p class="section-kicker">Kemampuan teknis saya sejauh ini</p>
                 <h1>Skills</h1>
+
+                <div class="filter-bar">
+                    <div>
+                        <span>Kategori</span>
+                        <a href = "?category=frontend">Front-end</a>
+                        <a href = "?category=backend">Back-end</a>
+                        <a href = "?category=devops">DevOps</a>
+                        <a href = "?category=database">Database</a>
+                    </div>
+
+                    <div>
+                        <span>Tingkat</span>
+                        <a href = "?category=beginner">Beginner</a>
+                        <a href = "?category=intermediate">Intermediate</a>
+                        <a href = "?category=advanced">Advanced</a>
+                    </div>
+
+                    <div>
+                        <a href="{% url 'main:show_skill' %}">Tampilkan Semua</a>
+                    </div>
+                </div>
     
                 <div class="skill-grid">
                     {% for skill in skill_list %}
