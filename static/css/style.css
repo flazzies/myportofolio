@@ -26,6 +26,7 @@ html, body {
     --category-color: hsl(211, 100%, 96%);
     --category-text-color: #3F72AF;
     --navbar-color: #e5e8ed;
+    --button-danger-color: #ff8791;
 }
 
 .darkmode {
@@ -45,6 +46,7 @@ html, body {
     --category-color: hsl(213, 100%, 24%);
     --category-text-color: rgb(180, 213, 255);
     --navbar-color: #001021;
+    --button-danger-color: #E63946;
 
 }
 
@@ -820,7 +822,8 @@ h1, .brand {
 }
 
 .button-danger {
-    background: #b42318;
+    background: var(--button-danger-color);
+    color: var(--ink);
 }
 
 @media (max-width: 600px) {
@@ -861,4 +864,38 @@ h1, .brand {
         width: 100%;
         text-align: center;
     }
+}
+
+.date {
+    font-size: 0.875rem;         
+    font-weight: 500;            
+    color: var(--ink);              
+    letter-spacing: 0.02em;       
+    margin-top: 0.3rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;                
+}
+
+.custom-select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    background-color: var(--skill-card);
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  /* Hover & Focus */
+.custom-select:hover {
+    border-color: #0095ff;
+}
+  
+.custom-select:focus {
+    outline: 2px solid var(--accent);
+    border-color: var(--accent);
 }

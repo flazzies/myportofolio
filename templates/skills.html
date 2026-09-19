@@ -1,64 +1,63 @@
-<body>
-    {% extends 'base.html' %}
-    {% block content %}
-    <main>
-        <section class="skill-section" id="skills">
-            <div class="container">
-                <p class="section-kicker">Kemampuan teknis saya sejauh ini</p>
-                <h1>Skills</h1>
 
-                <div class="filter-bar">
-                    <div>
-                        <span>Kategori</span>
-                        <a href = "?category=frontend">Front-end</a>
-                        <a href = "?category=backend">Back-end</a>
-                        <a href = "?category=devops">DevOps</a>
-                        <a href = "?category=database">Database</a>
-                    </div>
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <section class="skill-section" id="skills">
+        <div class="container">
+            <p class="section-kicker">Kemampuan teknis saya sejauh ini</p>
+            <h1>Skills</h1>
 
-                    <div>
-                        <span>Tingkat</span>
-                        <a href = "?proficiency=beginner">Beginner</a>
-                        <a href = "?proficiency=intermediate">Intermediate</a>
-                        <a href = "?proficiency=advanced">Advanced</a>
-                    </div>
-
-                    <div>
-                        <a href="{% url 'main:show_skill' %}">Tampilkan Semua</a>
-                    </div>
+            <div class="filter-bar">
+                <div>
+                    <span>Kategori</span>
+                    <a href = "?category=frontend">Front-end</a>
+                    <a href = "?category=backend">Back-end</a>
+                    <a href = "?category=devops">DevOps</a>
+                    <a href = "?category=database">Database</a>
                 </div>
-    
-                <div class="skill-grid">
-                    {% for skill in skill_list %}
-                        <article class="skill-card">
-                            {% if skill.thumbnail %}
-                            <div class="icon-tile">
-                                <img src="{{ skill.thumbnail }}" alt="{{ skill.name }}" style="max-width: 55px; margin-bottom: 0.2rem;">
-                            </div>
-                            {% endif %}
-                            <p class="skill-category">
-                                {{ skill.get_category_display }}
-                            </p>
-                            <h2>{{ skill.name }}</h2>
-                            <p class="skill-proficiency">
-                                Tingkat: {{ skill.get_proficiency_display }}
-                            </p>
-                            <p class="skill-description">
-                                {{ skill.description }}
-                            </p>
-    
-                        </article>
-                    {% empty %}
-                        <p class="empty-state">
-                            Belum ada keahlian yang ditambahkan.
-                        </p>
-                    {% endfor %}
+
+                <div>
+                    <span>Tingkat</span>
+                    <a href = "?proficiency=beginner">Beginner</a>
+                    <a href = "?proficiency=intermediate">Intermediate</a>
+                    <a href = "?proficiency=advanced">Advanced</a>
+                </div>
+
+                <div>
+                    <a href="{% url 'main:show_skill' %}">Tampilkan Semua</a>
                 </div>
             </div>
-        </section>
-    </main>
-    {% endblock content %}
+
+            <div class="skill-grid">
+                {% for skill in skill_list %}
+                    <article class="skill-card">
+                        {% if skill.thumbnail %}
+                        <div class="icon-tile">
+                            <img src="{{ skill.thumbnail }}" alt="{{ skill.name }}" style="max-width: 55px; margin-bottom: 0.2rem;">
+                        </div>
+                        {% endif %}
+                        <p class="skill-category">
+                            {{ skill.get_category_display }}
+                        </p>
+                        <h2>{{ skill.name }}</h2>
+                        <p class="skill-proficiency">
+                            Tingkat: {{ skill.get_proficiency_display }}
+                        </p>
+                        <p class="skill-description">
+                            {{ skill.description }}
+                        </p>
+
+                    </article>
+                {% empty %}
+                    <p class="empty-state">
+                        Belum ada keahlian yang ditambahkan.
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
 
 
-</body>
-</html>
+

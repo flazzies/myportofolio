@@ -25,6 +25,7 @@ class Experience(models.Model):
     def is_ongoing(self):
         return self.ended_at is None
     
+    
 class Skill(models.Model):
     CATEGORY_CHOICES = [
         ('frontend', 'Front-end Development'),
