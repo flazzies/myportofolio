@@ -60,3 +60,37 @@ Link chat gemini: https://share.gemini.google/fNsVL2AthVLH
 
 Saya juga menggunaskan gemini untuk bantu menjawab pertanyaan refleksi.
 Link chat gemini: https://share.gemini.google/rNJdf5AClrND
+
+### Tugas 3 ###
+1. Kita menggunakan model form karena: 
+- Akan lebih gampang untuk menambahkan field-fieldnya lagi, jadi gausah dihardcode satu per satu di html. 
+- Validasi dilakukan secara otomatis secara tipe data di models.py
+- Data langsung masuk ke database
+- Input aman dari data berbahaya seperti serangan SQL injection atau cross site scripting
+- Jika input gak valid, akan langsung disampaikan pesan eror ke pengguna
+
+Wajib menambahkan csrf_token karena tanpanya, situs web yg berbahaya bisa menggunakan status login (session/cookies) pengguna yg sedang aktif untuk mengirimkan request jahat seperti ganti kata sandi atau menghapus data tanpa pengetahuan pengguna.
+
+2. JSON lebih disukai karena:
+- Ukuran filenya lebih kecil
+- Native dengan java script sehingga parsing lebih cepet
+- Struktur key-value dan array yg sederhana
+- Gampang dibaca oleh manusia
+
+3. Alur fungsi view:
+- Client mengirimkan request 
+- Fungsi view di django menerima request terus ngambil data dari database
+- Serialization, data dari json diubah menjadi tipe data python standar
+- Data hasil serialisasi dibungkus ke dalam objek
+- Response, django mengirimkan string json tersebut kembali ke client untuk diolah di front end
+
+Kita perlu proses serialization karena alasan ketidakcocokan tipe data:
+- Bentuk data django harus diubah karena tidak dipahami oleh web browser atau bahasa pemograman lain
+- Bentuk data json adalah teks berbasis string murni yg ketat dan hanya mendukung tipe data dasar
+- Serialization ini menerjemahkan data dari Django (QuerySet) dan mengestrak nilai2nya menjadi struktur data dasar python (dict/list) yang kemudian bisa diubah ke json secara aman. 
+
+
+AI Disclosure:
+Saya menggunakan AI untuk membantu penulisan kode, dan untuk mengetahui sintaks dan struktur dari form data delivery. Dan untuk membantu menjawab pertanyaan refleksi. 
+
+Chat log Gemini: 
