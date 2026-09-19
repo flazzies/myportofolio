@@ -76,7 +76,9 @@ class ExperienceForm(ModelForm):
                     "rows": 3,
                 }
             ),
-            "category": Select(),
+            "category": Select(attrs={
+                'class': 'custom-select',
+            }),
             "thumbnail": URLInput(
                 attrs={
                     "placeholder": "https://example.com/logo.png",
