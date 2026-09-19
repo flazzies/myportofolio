@@ -107,6 +107,7 @@ def create_experience(request):
     form = ExperienceForm(request.POST or None)
     if form.is_valid() and request.method=="POST":
         form.save()
+        messages.success(request, 'Pengalaman berhasil ditambahkan!')
         return redirect('main:show_experience')
     context = {
         "name": "Geo",
@@ -120,6 +121,7 @@ def edit_experience(request, id):
     form = ExperienceForm(request.POST or None, instance=experience)
     if form.is_valid() and request.method == "POST":
         form.save()
+        messages.info(request, 'Pengalaman berhasil diperbarui!')
         return redirect('main:show_experience')
     
     context = {
@@ -133,6 +135,7 @@ def edit_experience(request, id):
 def delete_experience(request, id):
     experience = get_object_or_404(Experience, pk=id)
     experience.delete()
+    messages.warning(request, 'Pengalaman berhasil dihapus!')
     return redirect('main:show_experience')
 
 def show_json_experience(request):

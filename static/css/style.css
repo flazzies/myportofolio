@@ -899,3 +899,46 @@ h1, .brand {
     outline: 2px solid var(--accent);
     border-color: var(--accent);
 }
+
+/* -- Alert Styling -- */
+
+/* Sembunyikan alert jika kosong */
+.alert:empty,
+.messages-container:empty {
+  display: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Update styling alert agar border lebih bersih */
+.alert {
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
+  border: none; /* Hilangkan border default */
+}
+
+.alert-success {
+  background-color: var(--proficiency-color);
+  color: var(--proficiency-text-color);
+  border-left: 4px solid var(--proficiency-text-color); /* Aksen garis hanya di sebelah kiri */
+}
+
+.alert-info {
+  background-color: var(--category-color);
+  color: var(--category-text-color);
+  border-left: 4px solid var(--accent);
+}
+
+.alert-warning,
+.alert-danger,
+.alert-error {
+  background-color: var(--button-danger-color);
+  color: #ffffff;
+  border-left: 4px solid #b91c1c;
+}
+
