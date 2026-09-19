@@ -1,11 +1,12 @@
-from django.shortcuts import render
+import json
+from django.shortcuts import render, get_object_or_404, redirect, render
 from django.contrib import messages
 from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+
 
 from main.models import Experience, Skill, Project
-from main.forms import ProjectForm  
+from main.forms import ProjectForm, ExperienceForm
 
 def show_main(request):
     context = {
@@ -21,13 +22,7 @@ def show_main(request):
     return render(request, "index.html", context)
 
 
-def show_experience(request):
-    context = {
-        "name": "Geo",
-        "fullname" : "Georgius Satria Adibrata",
-        "experience_list": Experience.objects.all(),
-    }
-    return render(request, "experience.html", context)
+
 
 def show_skill(request):
     category_filter = request.GET.get('category')
@@ -99,3 +94,59 @@ def get_projects_json(request):
 
     projects_json = serializers.serialize("json", projects)
     return HttpResponse(projects_json, content_type="application/json")
+
+def show_experience(request):
+    context = {
+        "name": "Geo",
+        "fullname" : "Georgius Satria Adibrata",
+        "experience_list": Experience.objects.all(),
+    }
+    return render(request, "experience.html", context)
+
+def create_experience(request):
+    form = ExperienceForm(request.POST or None)
+    if form.is_valid() and request.method=="POST":
+        form.save()
+        return redirect('main:show_experience')
+    context = {
+        "name": "Geo",
+        "fullname": "Georgius Satria Adibrata",
+        "form": form,
+    }
+    return render(request, "experience_form.html", context)
+
+def edit_experience(request, id):
+    experience = get_object_or_404(Experience, pk=id)
+    form = ExperienceForm(request.POST or None, instance=experience)
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return redirect('main:show_experience')
+    
+    context = {
+        "name": "Geo",
+        "fullname": "Georgius Satria Adibrata",
+        "form": form,
+        "experience": experience,
+    }
+    return render(request, "experience_form.html", context)
+
+def delete_experience(request, id):
+    experience = get_object_or_404(Experience, pk=id)
+    experience.delete()
+    return redirect('main:show_experience')
+
+def show_json_experience(request):
+    data = Experience.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_json_experience_deserialized(request):
+    data_json = serializers.serialize("json", Experience.objects.all())
+    deserialized_objects = [obj.object for obj in serializers.deserialize("json", data_json)]
+    
+    context = {
+        "name": "Geo",
+        "fullname": "Georgius Satria Adibrata",
+        "experience_list": deserialized_objects,
+    }
+    return render(request, 'experience.html', context)
+    

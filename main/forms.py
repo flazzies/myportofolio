@@ -1,6 +1,6 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput
+from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, DateInput
 
-from main.models import Project
+from main.models import Project, Experience
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -47,6 +47,49 @@ class ProjectForm(ModelForm):
             "project_image_url": URLInput(
                 attrs={
                     "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
+            ),
+        }
+        
+class ExperienceForm(ModelForm):
+    class Meta:
+        model = Experience
+        fields = ["title", "description", "category", "thumbnail", "started_at", "ended_at"]
+        labels = {
+            "title": "Judul Pengalaman",
+            "description": "Deskripsi Pengalaman",
+            "category": "Kategori Pengalaman",
+            "thumbnail": "URL Logo / Gambar",
+            "started_at": "Tanggal Mulai",
+            "ended_at": "Tanggal Selesai",
+        }
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "Contoh: Software Engineer Intern",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Ceritakan peran dan pencapaianmu",
+                    "rows": 3,
+                }
+            ),
+            "category": Select(),
+            "thumbnail": URLInput(
+                attrs={
+                    "placeholder": "https://example.com/logo.png",
+                }
+            ),
+            "started_at": DateInput(
+                attrs={
+                    "type": "date",
+                }
+            ),
+            "ended_at": DateInput(
+                attrs={
+                    "type": "date",
                 }
             ),
         }
