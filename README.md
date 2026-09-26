@@ -93,4 +93,9 @@ Kita perlu proses serialization karena alasan ketidakcocokan tipe data:
 AI Disclosure:
 Saya menggunakan AI untuk membantu penulisan kode, dan untuk mengetahui sintaks dan struktur dari form data delivery. Dan untuk membantu menjawab pertanyaan refleksi. 
 
-Chat log Gemini: 
+Chat log Gemini: maap sepertinya tenggelem, kmrn lupa ngisi 😭😭
+
+### Tugas 4 ###
+
+Saya menggunakan claude untuk membantu memperjelas alur kerja dan untuk debugging.
+Chat Log: https://claude.ai/share/253c889d-e340-446e-a077-1c1241bdc080
