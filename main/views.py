@@ -12,6 +12,8 @@ from django.core.exceptions import PermissionDenied
 
 from main.models import Experience, Skill, Project
 from main.forms import ProjectForm, ExperienceForm
+def is_editor(user):
+    return user.groups.filter(name='Editor').exists()
 
 def show_main(request):
     last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
@@ -111,15 +113,22 @@ def get_projects_json(request):
     )
     return HttpResponse(projects_json, content_type="application/json")
 
+
+
 def show_experience(request):
     context = {
         "name": "Geo",
         "fullname" : "Georgius Satria Adibrata",
         "experience_list": Experience.objects.all(),
+        "is_editor": request.user.is_authenticated and is_editor(request.user),
     }
     return render(request, "experience.html", context)
 
+
+@login_required(login_url="/login/") 
 def create_experience(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     form = ExperienceForm(request.POST or None)
     if form.is_valid() and request.method=="POST":
         form.save()
@@ -132,7 +141,11 @@ def create_experience(request):
     }
     return render(request, "experience_form.html", context)
 
+
+@login_required(login_url="/login/") 
 def edit_experience(request, id):
+    if not (request.user.is_superuser  or is_editor(request.user)):
+        raise PermissionDenied
     experience = get_object_or_404(Experience, pk=id)
     form = ExperienceForm(request.POST or None, instance=experience)
     if form.is_valid() and request.method == "POST":
@@ -148,10 +161,15 @@ def edit_experience(request, id):
     }
     return render(request, "experience_form.html", context)
 
+@login_required(login_url="/login/") 
 def delete_experience(request, id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     experience = get_object_or_404(Experience, pk=id)
-    experience.delete()
-    messages.warning(request, 'Pengalaman berhasil dihapus!')
+    if request.method == "POST":
+        experience.delete()
+        messages.warning(request, 'Pengalaman berhasil dihapus!')
+        return redirect('main:show_experience')
     return redirect('main:show_experience')
 
 def show_json_experience(request):
@@ -221,3 +239,18 @@ def toggle_star(request, project_id):
             project.starred_by.add(request.user)
 
     return redirect("main:show_projects")
+
+
+
+@login_required(login_url="/login/")
+def toggle_endorse(request, skill_id):
+    skill = get_object_or_404(Skill, pk=skill_id)
+
+    if request.method == "POST":
+
+        if request.user in skill.endorsed_by.all():
+            skill.endorsed_by.remove(request.user)
+        else:
+            skill.endorsed_by.add(request.user)
+
+    return redirect("main:show_skill")

@@ -46,6 +46,9 @@
                         <p class="skill-description">
                             {{ skill.description }}
                         </p>
+                        <div class="project-actions">
+                            {% include "components/skill_endorse.html" with skill=skill %}
+                        </div>
 
                     </article>
                 {% empty %}

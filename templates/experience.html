@@ -37,20 +37,26 @@
                         {% else %}
                             <p class="experience-status">Selesai</p>
                         {% endif %}
-                        {% if user.is_superuser %}
+                        
                         <div class="card-actions" style="margin-top: 15px; display: flex; gap: 10px;">
+                            {% if user.is_superuser or is_editor %}
                             <a href="{% url 'main:edit_experience' experience.id %}" class="button button-secondary">
                                 Edit
                             </a>
-                            
-                            <a href="{% url 'main:delete_experience' experience.id %}" 
-                               class="button button-danger"
-                               onclick="return confirm('Apakah kamu yakin ingin menghapus experience ini?');">
-                                Hapus
-                            </a>
-                            
+                            {% endif %}
+                            {% if user.is_superuser %}
+                            <form action="{% url 'main:delete_experience' experience.id %}" 
+                                  method="POST" 
+                                  style="display: inline;"
+                                  onsubmit="return confirm('Apakah kamu yakin ingin menghapus experience ini?');">
+                                {% csrf_token %}
+                                <button type="submit" class="button button-danger">
+                                    Hapus
+                                </button>
+                            </form>
+                            {% endif %}
                         </div>
-                        {% endif %}
+                        
                     </article>
                 {% empty %}
                     <p class="empty-state">

@@ -50,6 +50,11 @@ class Skill(models.Model):
     
     def __str__(self):
         return self.name
+    
+    endorsed_by = models.ManyToManyField(
+        User, related_name="endorsed_skills", blank=True
+    )
+
 
 
 class Project(models.Model):
