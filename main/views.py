@@ -6,8 +6,8 @@ from django.core import serializers
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required  # Tambahkan baris ini
-from django.core.exceptions import PermissionDenied        # Tambahkan baris ini
+from django.contrib.auth.decorators import login_required 
+from django.core.exceptions import PermissionDenied        
 
 
 from main.models import Experience, Skill, Project

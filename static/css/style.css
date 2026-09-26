@@ -27,6 +27,7 @@ html, body {
     --category-text-color: #3F72AF;
     --navbar-color: #e5e8ed;
     --button-danger-color: #ff8791;
+    --link-color: #2563EB;
 }
 
 .darkmode {
@@ -47,7 +48,7 @@ html, body {
     --category-text-color: rgb(180, 213, 255);
     --navbar-color: #001021;
     --button-danger-color: #E63946;
-
+    --link-color:#60A5FA;
 }
 
 body {
@@ -950,7 +951,7 @@ h1, .brand {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: var(--ink);
+    background: var(--button-color);
 }
 
 .button-star.is-starred {
@@ -962,4 +963,8 @@ h1, .brand {
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.25);
     font-size: 0.8rem;
+}
+
+.auth-link{
+    color: var(--link-color);
 }

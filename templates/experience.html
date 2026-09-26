@@ -5,11 +5,13 @@
         <div class="container">
             <p class="section-kicker">Perjalanan saya sejauh ini</p>
             <h1>Experience</h1>
+            {% if user.is_superuser %}
             <div style="margin-bottom: 20px;">
                 <a href="{% url 'main:create_experience' %}" class="button">
                     + Tambah Experience Baru
                 </a>
             </div>
+            {% endif %}
 
             <div class="experience-grid">
                 {% for experience in experience_list %}
@@ -35,17 +37,20 @@
                         {% else %}
                             <p class="experience-status">Selesai</p>
                         {% endif %}
-
+                        {% if user.is_superuser %}
                         <div class="card-actions" style="margin-top: 15px; display: flex; gap: 10px;">
                             <a href="{% url 'main:edit_experience' experience.id %}" class="button button-secondary">
                                 Edit
                             </a>
+                            
                             <a href="{% url 'main:delete_experience' experience.id %}" 
                                class="button button-danger"
                                onclick="return confirm('Apakah kamu yakin ingin menghapus experience ini?');">
                                 Hapus
                             </a>
+                            
                         </div>
+                        {% endif %}
                     </article>
                 {% empty %}
                     <p class="empty-state">
