@@ -1112,3 +1112,7 @@ h1, .brand {
         text-align: center;
     }
 }
+
+.sort-select {
+    margin-bottom: 1.2rem;
+}

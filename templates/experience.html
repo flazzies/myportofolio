@@ -16,6 +16,14 @@
             </div>
             {% endif %}
 
+            <select id="sortSelect" class="custom-select sort-select">
+                <option value="newest">Terbaru</option>
+                <option value="oldest">Terlama</option>
+                <option value="title">Judul A-Z</option>
+                <option value="stars">Star terbanyak</option>
+            </select>
+            
+
             <!-- Form Pencarian AJAX -->
             <form id="experience-search-form" class="project-search" style="margin-bottom: 20px;">
                 <input type="search" 
@@ -177,7 +185,10 @@
         try {
             displayPageSection({ showLoading: true });
             
-            const url = searchQuery ? `${BASE_EXPERIENCES_ENDPOINT}?title=${encodeURIComponent(searchQuery)}` : BASE_EXPERIENCES_ENDPOINT;
+            const params = new URLSearchParams();
+            if (searchQuery) params.set('title', searchQuery);
+            params.set('sort', sortSelect.value);
+            const url = `${BASE_EXPERIENCES_ENDPOINT}?${params}`;
             
             const response = await fetch(url, {
                 headers: { 'Accept': 'application/json' },
@@ -270,7 +281,7 @@
             }
         } catch (error) {
             console.error('Error adding experience:', error);
-            showToast('Gagal menambahkan proyek', 'Tidak dapat terhubung ke server. Silakan coba lagi.', 'error');
+            showToast('Gagal menambahkan pengalaman', 'Tidak dapat terhubung ke server. Silakan coba lagi.', 'error');
         } finally {
             submitButton.disabled = false;
         }
@@ -279,6 +290,12 @@
     if (experienceForm) {
         experienceForm.addEventListener('submit', addExperience);
     }
+
+    const sortSelect = document.getElementById('sortSelect');
+
+    sortSelect.addEventListener('change', function() {
+        searchExperiences();   // membaca teks pencarian + nilai sortir terbaru
+    });
     // Start application
     fetchExperiences(searchInput.value.trim());
     </script>

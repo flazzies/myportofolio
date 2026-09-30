@@ -10,6 +10,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied  
 from django.http import JsonResponse      
 from django.views.decorators.http import require_POST
+from django.db.models import Count, F
+from django.db.models.functions import Lower
+
 
 
 
@@ -211,21 +214,27 @@ def delete_experience(request, id):
         return redirect('main:show_experience')
     return redirect('main:show_experience')
 
+SORT_OPTIONS = {
+    "newest": F("started_at").desc(nulls_last=True),
+    "oldest": F("started_at").asc(nulls_last=True),
+    "title": Lower("title"),
+    "stars": "-star_total",
+}
 
 def show_json_experience(request):
-    # Membaca parameter pencarian judul yang dikriim oleh pengguna melalui URL
     title_query = request.GET.get("title", "").strip()
+    sort_key = request.GET.get("sort", "newest")
+    if sort_key not in SORT_OPTIONS:
+        sort_key = "newest"
 
-    # Mengambil seluruh baris data experience dari database dan mengoptimalkan query relasi starred_by
-    experiences = Experience.objects.prefetch_related('starred_by').all()
+    experiences = Experience.objects.prefetch_related("starred_by").annotate(
+        star_total=Count("starred_by")
+    )
 
-    # If title_query mengecek kalo user mengisi pencarian
     if title_query:
-        #.filter adalah fungsi django untuk menyaring data yang ada dalam database
-        # title adalah nama kolom yg ingin difilter
-        # contains: mencari yg mengandung kata tersebut
-        # i: insensitive
         experiences = experiences.filter(title__icontains=title_query)
+
+    experiences = experiences.order_by(SORT_OPTIONS[sort_key])
 
 
     # Konstruksi data JSON secara manual agar bisa menyisipkan logika Star
