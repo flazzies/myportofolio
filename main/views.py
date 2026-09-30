@@ -191,8 +191,11 @@ def delete_experience(request, id):
     return redirect('main:show_experience')
 
 def show_json_experience(request):
-    data = Experience.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    experiences = Experience.objects.all()
+    experience_json = serializers.serialize(
+    "json", experiences, use_natural_foreign_keys=True  # Tambahkan argumen ini
+    )
+    return HttpResponse(experience_json, content_type="application/json")
 
 def show_json_experience_deserialized(request):
     data_json = serializers.serialize("json", Experience.objects.all())
@@ -258,6 +261,20 @@ def toggle_star(request, project_id):
 
     return redirect("main:show_projects")
 
+# Tanpa cek is_superuser: semua akun yang sudah login boleh memberi star
+@login_required(login_url="/login/")
+def toggle_star_experience(request, experience_id):
+    experience = get_object_or_404(Project, pk=experience_id)
+
+    if request.method == "POST":
+        # Kalau akun ini sudah pernah memberi star, batalkan star-nya.
+        # Kalau belum, tambahkan star.
+        if request.user in experience.starred_by.all():
+            experience.starred_by.remove(request.user)
+        else:
+            experience.starred_by.add(request.user)
+
+    return redirect("main:show_experience")
 
 
 @login_required(login_url="/login/")
@@ -274,6 +291,8 @@ def toggle_endorse(request, skill_id):
     return redirect("main:show_skill")
 
 from django.views.decorators.http import require_POST
+
+
 
 
 

@@ -44,6 +44,8 @@
                                 Edit
                             </a>
                             {% endif %}
+                            {% include "components/experience_star.html" with project=project %}
+
                             {% if user.is_superuser %}
                             <form action="{% url 'main:delete_experience' experience.id %}" 
                                   method="POST" 
