@@ -99,3 +99,44 @@ Chat log Gemini: maap sepertinya tenggelem, kmrn lupa ngisi 😭😭
 
 Saya menggunakan claude untuk membantu memperjelas alur kerja dan untuk debugging.
 Chat Log: https://claude.ai/share/253c889d-e340-446e-a077-1c1241bdc080
+
+### Tugas 5 ###
+Pertanyaan reflektif:
+1. Untuk menejelaskan kenapa teknik ini penting, kita bayangkan apa yang terjadi jika kita tidak memakai debouncing. Misal kita mengetik kata "Laptop" di kolom pencarian. 
+L --> Kirim request "L"
+a --> Kirim request "a"
+.... dan seterusnya, itu ada 6 kali pencarian.
+
+Debouncing digunakan untuk menghindari hal ini, jadi dia menunggu user selesai ngetik, baru dikirim request-nya. Sistem akan menunggu jeda waktu yang singkat (misalnya sekitar 300-500 ms) setelah tombol terakhir ditekan. Lalu jika ada tombol yang ditekan lagi dalam kurun waktu singkat tersebut, timer diulang dari 0.
+
+Hasilnya jika setiap tombol diketik sebelum jeda waktu 300-500 ms itu, server tidak akan mengirim request, lalu jika usernya sudah selesai ngetik, baru server mengirim request, jadi total hanya satu request saja. 
+
+Ini penting karena beberapa poin:
+- Hemat beban server dan database: Kalo ada ribuan2 pengguna yg memakai website ini, server dapat menerima puluhan ribu request dalam waktu yg sama, dan ini sangat membebani server. 
+
+- Mencegah race condition: Bisa saja pencarian huruf lebih awal butuh waktu yg lebih lama daripada pencarian huruf setelahnya. Misal kita search 'laptop', kan harus kyk melalui kata 'lap' dulu ya, bisa jadi pencarian 'lap' ini baru selesainya lama, lebih lama daripada pencarian laptop. Hasilnya yang keluar malah pencarian 'lap'. Ini akan membuat user bingung.
+
+- Menghemat kuota dan baterai pengguna: Mengirim terlalu banyak request menguras batere dan kuota
+
+- Aplikasi lebih smooth: Karena browser gk ngirim terlalu banyak request dalam kurun waktu singkat, maka tampilannya gak akan patah-patah (ngelag)
+
+2. Jadi keyword await ini menyuruh JavaScript menunggu sampai proses pengambilan data dari server sudah selesai, baru secara otomatis dia mengubah bentuk Promise menjadi data balasan (Response) yang asli.
+
+Jika kita tidak pakai await, kode akan langsung dijalankan tanpa menunggu proses pengambilan data selesai. Akibatnya variabelnya bukan data dari server, tapi objek Promise yang masih pending. Lalu malah dapet eror seperti TypeError: Cannot read properties of undefined (tidak bisa membaca data) karena memangh datanya belom ada.
+
+3. XSS adalah serangan dari peretas dimana peretas menyisipkan kode JavaScript jahat ke situs web agar berjalan otomatis di browser pengguna lain (misalnya utk mencuri cookie atau session).
+
+- Django template lebih aman karena dia secara otomatis melakukan auto escaping pada sintaks {{ data }}. Karakter2 berbahaya seperti <script> diubah menjadi teks murni sehingga tidak dijalankan browser.
+
+- AJAX/JavaScript tidak mempunyai proteksi otomatis, kalo masukkin kode menggunakan metode yg membaca HTML seperti innerHTML atau .html, browser akan merender dan mengeksekusi kode javascript jahat secara langsung.
+
+
+AI Disclosure:
+Dalam tugas ini, saya kebanyakan copy paste dari tutorial, lalu diganti saja contextnya sesuai bagian portofolio yang saya bikin. Namun jika kode terlalu besar atau masih ada masalah ketika saya coba ganti contextnya, saya pakai AI untuk membantu. Saya juga memakai AI untuk debugging error dan untuk menjelaskan pertanyaan reflektif.
+
+
+
+Chat Log:
+
+Gemini: https://gemini.google.com/share/d/18uLghTQA4_N8pNEYrR5WrwGvRWteFOQT?usp=sharing
+Claude: https://claude.ai/share/6021e8a6-7d56-4d2f-8a14-93a03ff2c89e
