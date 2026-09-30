@@ -99,7 +99,7 @@ def delete_project(request, project_id):
     return redirect("main:show_projects")
 
 
-from django.http import JsonResponse
+
 
 def get_projects_json(request):
     title_query = request.GET.get("title", "").strip()
@@ -134,11 +134,14 @@ def get_projects_json(request):
 
 
 def show_experience(request):
+    title_query = request.GET.get("title", "").strip()
     context = {
         "name": "Geo",
         "fullname" : "Georgius Satria Adibrata",
-        "experience_list": Experience.objects.all(),
+        "title_query" : title_query,
         "is_editor": request.user.is_authenticated and is_editor(request.user),
+        "form":ExperienceForm(),
+        
     }
     return render(request, "experience.html", context)
 
@@ -159,6 +162,24 @@ def create_experience(request):
     }
     return render(request, "experience_form.html", context)
 
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan experience."},
+            status=403,
+        )
+
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        experience = form.save()
+        return JsonResponse(
+            {"message": "Pengalaman berhasil ditambahkan.", "pk": str(experience.id)},
+            status=201,
+        )
+
+    print("FORM ERRORS:", form.errors.as_json()) # 🔍 Cek error persis di terminal
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
 @login_required(login_url="/login/") 
 def edit_experience(request, id):
@@ -190,12 +211,50 @@ def delete_experience(request, id):
         return redirect('main:show_experience')
     return redirect('main:show_experience')
 
+
 def show_json_experience(request):
-    experiences = Experience.objects.all()
-    experience_json = serializers.serialize(
-    "json", experiences, use_natural_foreign_keys=True  # Tambahkan argumen ini
-    )
-    return HttpResponse(experience_json, content_type="application/json")
+    # Membaca parameter pencarian judul yang dikriim oleh pengguna melalui URL
+    title_query = request.GET.get("title", "").strip()
+
+    # Mengambil seluruh baris data experience dari database dan mengoptimalkan query relasi starred_by
+    experiences = Experience.objects.prefetch_related('starred_by').all()
+
+    # If title_query mengecek kalo user mengisi pencarian
+    if title_query:
+        #.filter adalah fungsi django untuk menyaring data yang ada dalam database
+        # title adalah nama kolom yg ingin difilter
+        # contains: mencari yg mengandung kata tersebut
+        # i: insensitive
+        experiences = experiences.filter(title__icontains=title_query)
+
+
+    # Konstruksi data JSON secara manual agar bisa menyisipkan logika Star
+    data = []
+    for experience in experiences:
+        starred_users = list(experience.starred_by.all())
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+
+        data.append({
+            "pk": str(experience.id),
+            "fields": {
+                "title": experience.title,
+                "description": experience.description,
+                "category": experience.category,
+                "thumbnail": experience.thumbnail,
+                "started_at": experience.started_at.isoformat() if experience.started_at else None,
+                "ended_at": experience.ended_at.isoformat() if experience.ended_at else None,
+                "star_count": len(starred_users),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
+
+
+
+
 
 def show_json_experience_deserialized(request):
     data_json = serializers.serialize("json", Experience.objects.all())
@@ -264,7 +323,7 @@ def toggle_star(request, project_id):
 # Tanpa cek is_superuser: semua akun yang sudah login boleh memberi star
 @login_required(login_url="/login/")
 def toggle_star_experience(request, experience_id):
-    experience = get_object_or_404(Project, pk=experience_id)
+    experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "POST":
         # Kalau akun ini sudah pernah memberi star, batalkan star-nya.

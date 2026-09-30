@@ -1033,6 +1033,7 @@ h1, .brand {
     z-index: 10;
     align-items: center;
     justify-content: center;
+    color: var(--ink);
 }
 
 .project-form-modal:popover-open {

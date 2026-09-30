@@ -6,7 +6,7 @@ from main.views import(
     show_json_experience, show_json_experience_deserialized,
     show_skill, create_project, show_projects, get_projects_json, delete_project,
     register, login_user, logout_user, toggle_star, toggle_endorse,
-    create_project_ajax, toggle_star_experience
+    create_project_ajax, toggle_star_experience, create_experience_ajax
 )
 
 app_name = "main"
@@ -32,5 +32,7 @@ urlpatterns = [
     path("projects/add-ajax/", create_project_ajax, name="create_project_ajax"),
     # Tambahkan path ini ke dalam urlpatterns
     path("experience/<uuid:experience_id>/star/", toggle_star_experience, name="toggle_star_experience",),
+    path("experience/add-ajax/", create_experience_ajax, name="create_experience_ajax"),
+
     
 ]
